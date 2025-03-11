@@ -159,7 +159,10 @@ include_directories(
 ## in contrast to setup.py, you can choose the destination
 catkin_install_python(PROGRAMS
    src/pick_client.py
-   src/pick.py
+   src/franka_server.py
+   src/franka_static_pick.py
+   src/yumi_server.py
+   src/yumi_static_pick.py
    DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION}
 )
 

@@ -12,19 +12,19 @@ import tf.transformations as tf
 import numpy as np
 from panda_controller.srv import MoveToGoal, MoveToGoalResponse
 
-class PicknPlace:
+class Yumi_PicknPlace:
     def __init__(self):
         self.object_pos = None
 
     def open_gripper(self, posture):
-        posture.joint_names = ["panda_finger_joint1", "panda_finger_joint2"]
+        posture.joint_names = ["gripper_l_joint", "gripper_l_joint_m"]
         point = trajectory_msgs.msg.JointTrajectoryPoint()
-        point.positions = [0.04, 0.04]
+        point.positions = [0.025, 0.025]
         point.time_from_start = rospy.Duration(0.5)
         posture.points.append(point)
 
     def closed_gripper(self, posture):
-        posture.joint_names = ["panda_finger_joint1", "panda_finger_joint2"]
+        posture.joint_names = ["gripper_l_joint", "gripper_l_joint_m"]
         point = trajectory_msgs.msg.JointTrajectoryPoint()
         point.positions = [0.0, 0.0]
         point.time_from_start = rospy.Duration(0.5)
@@ -32,17 +32,17 @@ class PicknPlace:
 
     def add_collision_objects(self, planning_scene_interface):
         # Add a table (box) to the scene
-        table_name = "table1"
-        table_size_x = 0.8
-        table_size_y = 0.8
-        table_size_z = 0.8
-        table_x = 0.23
+        table_name = "robot_table"
+        table_size_x = 0.94
+        table_size_y = 0.97
+        table_size_z = 0.78
+        table_x = 0.277
         table_y = 0.0
-        table_z = -0.4
+        table_z = -0.39
 
         # Create PoseStamped for the table object
         table_pose_stamped = geometry_msgs.msg.PoseStamped()
-        table_pose_stamped.header.frame_id = "panda_link0"  # You can use "world" or another frame
+        table_pose_stamped.header.frame_id = "yumi_base_link"  # You can use "world" or another frame
         table_pose_stamped.pose.position.x = table_x
         table_pose_stamped.pose.position.y = table_y
         table_pose_stamped.pose.position.z = table_z
@@ -51,17 +51,17 @@ class PicknPlace:
         # Add the table to the planning scene using PlanningSceneInterface
         planning_scene_interface.add_box(table_name, table_pose_stamped, (table_size_x, table_size_y, table_size_z))
 
-        table_name = "table2"
-        table_size_x = 0.8
-        table_size_y = 0.8
-        table_size_z = 0.8
-        table_x = -0.59
+        table_name = "faulty_conveyor"
+        table_size_x = 0.3
+        table_size_y = 1.0
+        table_size_z = 0.78
+        table_x = 1.277
         table_y = 0.0
-        table_z = -0.4
+        table_z = -0.39
 
         # Create PoseStamped for the table object
         table_pose_stamped = geometry_msgs.msg.PoseStamped()
-        table_pose_stamped.header.frame_id = "panda_link0"  # You can use "world" or another frame
+        table_pose_stamped.header.frame_id = "yumi_base_link"  # You can use "world" or another frame
         table_pose_stamped.pose.position.x = table_x
         table_pose_stamped.pose.position.y = table_y
         table_pose_stamped.pose.position.z = table_z
@@ -70,17 +70,17 @@ class PicknPlace:
         # Add the table to the planning scene using PlanningSceneInterface
         planning_scene_interface.add_box(table_name, table_pose_stamped, (table_size_x, table_size_y, table_size_z))
 
-        table_name = "table3"
-        table_size_x = 0.8
-        table_size_y = 0.8
-        table_size_z = 0.8
-        table_x = 0.23
-        table_y = 0.82
-        table_z = -0.4
+        table_name = "next_conveyor"
+        table_size_x = 1.0
+        table_size_y = 0.3
+        table_size_z = 0.78
+        table_x = 0.277
+        table_y = 1.0
+        table_z = -0.39
 
         # Create PoseStamped for the table object
         table_pose_stamped = geometry_msgs.msg.PoseStamped()
-        table_pose_stamped.header.frame_id = "panda_link0"  # You can use "world" or another frame
+        table_pose_stamped.header.frame_id = "yumi_base_link"  # You can use "world" or another frame
         table_pose_stamped.pose.position.x = table_x
         table_pose_stamped.pose.position.y = table_y
         table_pose_stamped.pose.position.z = table_z
@@ -98,7 +98,7 @@ class PicknPlace:
 
         # Create PoseStamped for the object
         object_pose_stamped = geometry_msgs.msg.PoseStamped()
-        object_pose_stamped.header.frame_id = "panda_link0"  # Use "world" or another frame
+        object_pose_stamped.header.frame_id = "yumi_base_link"  # Use "world" or another frame
         object_pose_stamped.pose.position.x = self.object_pos.x
         object_pose_stamped.pose.position.y = self.object_pos.y
         object_pose_stamped.pose.position.z = self.object_pos.z
@@ -112,34 +112,32 @@ class PicknPlace:
     def pick(self, move_group):
 
         grasps = [moveit_msgs.msg.Grasp()]
-        grasps[0].grasp_pose.header.frame_id = "panda_link0"
+        grasps[0].grasp_pose.header.frame_id = "yumi_base_link"
         
         #orientation = tf.quaternion_from_euler(np.pi/2, -np.pi/2, 0)
-        orientation = tf.quaternion_from_euler(-np.pi, 0, np.pi*2)
+        orientation = tf.quaternion_from_euler(-np.pi, 0, 0)
         grasps[0].grasp_pose.pose.orientation.x = orientation[0]
         grasps[0].grasp_pose.pose.orientation.y = orientation[1]
         grasps[0].grasp_pose.pose.orientation.z = orientation[2]
         grasps[0].grasp_pose.pose.orientation.w = orientation[3]
-
         grasps[0].grasp_pose.pose.position.x = self.object_pos.x
         grasps[0].grasp_pose.pose.position.y = self.object_pos.y
-        grasps[0].grasp_pose.pose.position.z = self.object_pos.z * 2 + 0.1034 - 0.02 
-        #grasps[0].grasp_pose.pose.position.z = object_height + ee_offset - grabbing_space = 0.1834
+        grasps[0].grasp_pose.pose.position.z = 0.2
         
-        grasps[0].pre_grasp_approach.direction.header.frame_id = "panda_link0"
+        grasps[0].pre_grasp_approach.direction.header.frame_id = "yumi_base_link"
         grasps[0].pre_grasp_approach.direction.vector.z = -1.0  # Move downwards
-        grasps[0].pre_grasp_approach.min_distance = 0.02
-        grasps[0].pre_grasp_approach.desired_distance = 0.04
+        grasps[0].pre_grasp_approach.min_distance = 0.08
+        grasps[0].pre_grasp_approach.desired_distance = 0.1
         
-        grasps[0].post_grasp_retreat.direction.header.frame_id = "panda_link0"
+        grasps[0].post_grasp_retreat.direction.header.frame_id = "yumi_base_link"
         grasps[0].post_grasp_retreat.direction.vector.z = 1.0
-        grasps[0].post_grasp_retreat.min_distance = 0.05
-        grasps[0].post_grasp_retreat.desired_distance = 0.10
-
+        grasps[0].post_grasp_retreat.min_distance = 0.1
+        grasps[0].post_grasp_retreat.desired_distance = 0.15
+        
         self.open_gripper(grasps[0].pre_grasp_posture)
         self.closed_gripper(grasps[0].grasp_posture)
     
-        move_group.set_support_surface_name("table1")
+        move_group.set_support_surface_name("robot_table")
         result = move_group.pick("object", grasps)
         rospy.loginfo(f"Pick result: {result}")
 
@@ -155,10 +153,10 @@ class PicknPlace:
         place_location = [moveit_commander.PlaceLocation()]
 
         # Setting place location pose
-        place_location[0].place_pose.header.frame_id = "panda_link0"
+        place_location[0].place_pose.header.frame_id = "yumi_base_link"
         
         # Orientation (Equivalent to tau/4 in C++)
-        quaternion = tf.quaternion_from_euler(0, 0, 3.14159 / 2)
+        quaternion = tf.quaternion_from_euler(0, 0, np.pi/2)
         place_location[0].place_pose.pose.orientation.x = quaternion[0]
         place_location[0].place_pose.pose.orientation.y = quaternion[1]
         place_location[0].place_pose.pose.orientation.z = quaternion[2]
@@ -170,12 +168,12 @@ class PicknPlace:
         place_location[0].place_pose.pose.position.z = self.goal_pos.z
 
         # Pre-place approach
-        place_location[0].pre_place_approach.direction.header.frame_id = "panda_link0"
+        place_location[0].pre_place_approach.direction.header.frame_id = "yumi_base_link"
         place_location[0].pre_place_approach.direction.vector.z = -1.0
         place_location[0].pre_place_approach.min_distance = 0.03
         place_location[0].pre_place_approach.desired_distance =  0.06
         # Post-place retreat
-        place_location[0].post_place_retreat.direction.header.frame_id = "panda_link0"
+        place_location[0].post_place_retreat.direction.header.frame_id = "yumi_base_link"
         place_location[0].post_place_retreat.direction.vector.z = 1.0
         place_location[0].post_place_retreat.min_distance = 0.1
         place_location[0].post_place_retreat.desired_distance = 0.25
@@ -184,7 +182,7 @@ class PicknPlace:
         self.open_gripper(place_location[0].post_place_posture)
 
         # Set support surface
-        move_group.set_support_surface_name("table3")
+        move_group.set_support_surface_name("next_conveyor")
 
         # Execute place operation
         result = move_group.place("object", place_location)
@@ -206,11 +204,11 @@ class PicknPlace:
             moveit_commander.roscpp_initialize(sys.argv)
             
             planning_scene_interface = moveit_commander.PlanningSceneInterface()
-            move_group = moveit_commander.MoveGroupCommander("panda_arm")
+            move_group = moveit_commander.MoveGroupCommander("left_arm")
             move_group.set_planning_time(45.0)
             
             rospy.sleep(1.0)
-            joints_pub = rospy.Publisher("/franka/joint_command", JointState, queue_size=10)
+            joints_pub = rospy.Publisher("/yumi/joint_command", JointState, queue_size=10)
 
             # Publish joint states of perch position
             joint_state_msg = JointState()
@@ -258,12 +256,12 @@ class PicknPlace:
             return MoveToGoalResponse(success=True)
 
     def main(self):
-        rospy.init_node("panda_pick_and_place")
+        rospy.init_node("yumi_pick_and_place")
 
         rospy.Service('move_to_goal', MoveToGoal, self.move_to_goal)
 
         rospy.spin()
 
 if __name__ == "__main__":
-    pick_and_place = PicknPlace()
+    pick_and_place = Yumi_PicknPlace()
     pick_and_place.main()

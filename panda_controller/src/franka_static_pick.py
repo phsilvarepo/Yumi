@@ -35,13 +35,13 @@ class PicknPlace:
 
     def add_collision_objects(self, planning_scene_interface):
         # Add a table (box) to the scene
-        table_name = "table1"
-        table_size_x = 0.8
-        table_size_y = 0.8
-        table_size_z = 0.8
-        table_x = 0.23
+        table_name = "robot_table"
+        table_size_x = 0.94
+        table_size_y = 0.97
+        table_size_z = 0.78
+        table_x = 0.277
         table_y = 0.0
-        table_z = -0.4
+        table_z = -0.39
 
         # Create PoseStamped for the table object
         table_pose_stamped = geometry_msgs.msg.PoseStamped()
@@ -54,13 +54,13 @@ class PicknPlace:
         # Add the table to the planning scene using PlanningSceneInterface
         planning_scene_interface.add_box(table_name, table_pose_stamped, (table_size_x, table_size_y, table_size_z))
 
-        table_name = "table2"
-        table_size_x = 0.8
-        table_size_y = 0.8
-        table_size_z = 0.8
-        table_x = -0.59
+        table_name = "faulty_conveyor"
+        table_size_x = 1.0
+        table_size_y = 1.0
+        table_size_z = 0.78
+        table_x = 1.277
         table_y = 0.0
-        table_z = -0.4
+        table_z = -0.39
 
         # Create PoseStamped for the table object
         table_pose_stamped = geometry_msgs.msg.PoseStamped()
@@ -73,13 +73,13 @@ class PicknPlace:
         # Add the table to the planning scene using PlanningSceneInterface
         planning_scene_interface.add_box(table_name, table_pose_stamped, (table_size_x, table_size_y, table_size_z))
 
-        table_name = "table3"
-        table_size_x = 0.8
-        table_size_y = 0.8
-        table_size_z = 0.8
-        table_x = 0.23
-        table_y = 0.82
-        table_z = -0.4
+        table_name = "next_conveyor"
+        table_size_x = 1.0
+        table_size_y = 1.0
+        table_size_z = 0.78
+        table_x = 0.277
+        table_y = 1.0
+        table_z = -0.39
 
         # Create PoseStamped for the table object
         table_pose_stamped = geometry_msgs.msg.PoseStamped()
@@ -95,8 +95,8 @@ class PicknPlace:
         # Add a small object (box) to the scene
         obj_name = "object"
         # OBJ SIZE CAN DE DERIVED FROM DOPE FOR SIMPLICITY WE KNOW THE SIZE
-        self.obj_size_x = 0.04
-        self.obj_size_y = 0.04
+        self.obj_size_x = 0.068
+        self.obj_size_y = 0.068
         self.obj_size_z = 0.1
 
         self.obj_x = 0.4
@@ -179,7 +179,7 @@ class PicknPlace:
 
         #move_group.set_pose_target(grasps[0].grasp_pose.pose)
     
-        move_group.set_support_surface_name("table1")
+        move_group.set_support_surface_name("robot_table")
         result = move_group.pick("object", grasps)
         rospy.loginfo(f"Pick result: {result}")
 
@@ -217,7 +217,7 @@ class PicknPlace:
         self.open_gripper(place_location[0].post_place_posture)
 
         # Set support surface
-        group.set_support_surface_name("table3")
+        group.set_support_surface_name("next_conveyor")
 
         # Execute place operation
         group.place("object", place_location)

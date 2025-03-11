@@ -11,7 +11,7 @@ import shape_msgs.msg
 import tf.transformations as tf
 import numpy as np
 
-class PicknPlace:
+class Yumi_PicknPlace:
     def __init__(self):
         self.object_pos = None 
 
@@ -266,5 +266,5 @@ class PicknPlace:
 
 
 if __name__ == "__main__":
-    pick_and_place = PicknPlace()
+    pick_and_place = Yumi_PicknPlace()
     pick_and_place.main()
