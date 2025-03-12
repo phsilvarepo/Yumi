@@ -1,0 +1,11 @@
+moveit_setup_assistant_config:
+  URDF:
+    package: ldr
+    relative_path: LRMate-200iD.urdf
+    xacro_args: ""
+  SRDF:
+    relative_path: config/LRMate-200iD.srdf
+  CONFIG:
+    author_name: aSA
+    author_email: ASA@dasdsa.py
+    generated_timestamp: 1741798309
