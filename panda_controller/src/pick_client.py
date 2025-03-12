@@ -52,9 +52,13 @@ if __name__ == "__main__":
     #rospy.Subscriber("/ultralytics/detection/classes", String, yolo_callback)
     #rospy.Subscriber("/dope/relative_soup_pose", PoseStamped, dope_callback)
 
-    obj_position = Point(0.0, -0.55, 0.05)
-    #goal_position = Point(0.0, 0.55, 0.12)
-    goal_position = Point(0.55, 0.0, 0.12)
+    #obj_position = Point(0.0, -0.55, 0.05) Object on the right of robot in Franka env
+    #goal_position = Point(0.0, 0.55, 0.12) Next Conveyor Franka
+    #goal_position = Point(0.55, 0.0, 0.12) Faulty Conveyor Franka
+
+    obj_position = Point(0.4, 0.0, 0.05) # Object in front of robot in Yumi env
+    goal_position = Point(0.65, 0.0, 0.12) # Next Conveyor Yumi
+    #goal_position = Point(0.55, 0.55, 0.12) Faulty Conveyor Yumi
     
     rate = rospy.Rate(10)  # 10 Hz loop rate
     while not rospy.is_shutdown():

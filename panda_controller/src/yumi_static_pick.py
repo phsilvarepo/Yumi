@@ -215,7 +215,6 @@ class Yumi_PicknPlace:
         planning_scene_interface = moveit_commander.PlanningSceneInterface()
         move_group = moveit_commander.MoveGroupCommander("left_arm")
         move_group.set_planning_time(45.0)
-        
         rospy.sleep(1.0)
 
         #rospy.Subscriber('/dope/relative_soup_pose', geometry_msgs.msg.PoseStamped, self.callback_pose)
@@ -228,9 +227,9 @@ class Yumi_PicknPlace:
         joint_state_msg.position = move_group.get_current_joint_values()
         joints_pub.publish(joint_state_msg)
         rospy.loginfo("Published joint states for perch position.")
+        rospy.sleep(1.0)
 
         self.add_collision_objects(planning_scene_interface)
-
         rospy.sleep(1.0)
         
         '''
@@ -242,9 +241,9 @@ class Yumi_PicknPlace:
         rospy.loginfo("Published joint states after moving.")
         rospy.sleep(10.0)
         '''
+        
         self.pick(move_group)
         rospy.sleep(1.0)
-
 
         # Publish joint states after picking
         joint_state_msg.header.stamp = rospy.Time.now()

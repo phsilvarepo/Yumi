@@ -12,7 +12,7 @@ import tf.transformations as tf
 import numpy as np
 from panda_controller.srv import MoveToGoal, MoveToGoalResponse
 
-class PicknPlace:
+class Franka_PicknPlace:
     def __init__(self):
         self.object_pos = None
 
@@ -215,66 +215,59 @@ class PicknPlace:
         else:
             rospy.logwarn("Place action failed")
             return False
+        
+    def move(self, move_group):
+
+        perch_pos = [0.0, -0.7853981633974483, 0.0, -2.356194490192345, 0.0, 1.5707963267948966, 0.7853981633974483]
+
+        move_group.set_joint_value_target(perch_pos)
+        result = move_group.go(wait=True)
+
+        rospy.loginfo(f"Move to perch: {result}")
 
     def move_to_goal(self, req):
-            self.object_pos = req.object_pos # Set the object's position
-            self.goal_pos = req.goal_pos  # Set the goal position
+        self.object_pos = req.object_pos # Set the object's position
+        self.goal_pos = req.goal_pos  # Set the goal position
 
-            rospy.loginfo(f"Received request to move object from {self.object_pos} to {self.goal_pos}")
+        rospy.loginfo(f"Received request to move object from {self.object_pos} to {self.goal_pos}")
+    
+        moveit_commander.roscpp_initialize(sys.argv)
         
-            moveit_commander.roscpp_initialize(sys.argv)
-            
-            planning_scene_interface = moveit_commander.PlanningSceneInterface()
-            move_group = moveit_commander.MoveGroupCommander("panda_arm")
-            move_group.set_planning_time(45.0)
-            
-            rospy.sleep(1.0)
-            joints_pub = rospy.Publisher("/franka/joint_command", JointState, queue_size=10)
+        planning_scene_interface = moveit_commander.PlanningSceneInterface()
+        move_group = moveit_commander.MoveGroupCommander("panda_arm")
+        move_group.set_planning_time(45.0)
+        rospy.sleep(1.0)
 
-            # Publish joint states of perch position
-            joint_state_msg = JointState()
-            joint_state_msg.header.stamp = rospy.Time.now()
-            joint_state_msg.name = move_group.get_active_joints()
-            joint_state_msg.position = move_group.get_current_joint_values()
-            joints_pub.publish(joint_state_msg)
-            rospy.loginfo("Published joint states for perch position.")
+        # Publish joint states of perch position
+        perch_pos = [0.0, -0.7853981633974483, 0.0, -2.356194490192345, 0.0, 1.5707963267948966, 0.7853981633974483]
+        if perch_pos != move_group.get_current_joint_values():
+            rospy.loginfo(f"Moving to perch position...")
+            self.move(move_group)
+        
+        rospy.loginfo(f"Robot in perch position!")
 
-            self.add_collision_objects(planning_scene_interface)
-            rospy.sleep(1.0)
+        self.add_collision_objects(planning_scene_interface)
+        rospy.sleep(1.0)
 
-            pick_result = self.pick(move_group)
+        pick_result = self.pick(move_group)
 
-            if not pick_result:
-                rospy.logwarn("Pick failed, skipping place action")
-                moveit_commander.roscpp_shutdown()
-                return MoveToGoalResponse(success=False)
-            
-            rospy.sleep(1.0)
+        if not pick_result:
+            rospy.logwarn("Pick failed, skipping place action")
+            moveit_commander.roscpp_shutdown()
+            return MoveToGoalResponse(success=False)
+        
+        rospy.sleep(1.0)
+        
+        place_result = self.place(move_group)
 
-            # Publish joint states after picking
-            joint_state_msg.header.stamp = rospy.Time.now()
-            joint_state_msg.position = move_group.get_current_joint_values()
-            joints_pub.publish(joint_state_msg)
-            rospy.loginfo("Published joint states after picking.")
-            
-            place_result = self.place(move_group)
+        if not place_result:
+            rospy.logwarn("Place failed")
+            moveit_commander.roscpp_shutdown()
+            return MoveToGoalResponse(success=False)
+        
+        rospy.sleep(1.0)
 
-            if not place_result:
-                rospy.logwarn("Place failed")
-                moveit_commander.roscpp_shutdown()
-                return MoveToGoalResponse(success=False)
-            
-            rospy.sleep(1.0)
-
-            # Publish joint states after placing
-            joint_state_msg.header.stamp = rospy.Time.now()
-            joint_state_msg.position = move_group.get_current_joint_values()
-            joints_pub.publish(joint_state_msg)
-            rospy.loginfo("Published joint states after placing.")
-
-            #moveit_commander.roscpp_shutdown()
-
-            return MoveToGoalResponse(success=True)
+        return MoveToGoalResponse(success=True)
 
     def main(self):
         rospy.init_node("panda_pick_and_place")
@@ -284,5 +277,5 @@ class PicknPlace:
         rospy.spin()
 
 if __name__ == "__main__":
-    pick_and_place = PicknPlace()
+    pick_and_place = Franka_PicknPlace()
     pick_and_place.main()
