@@ -63,7 +63,8 @@ if __name__ == "__main__":
     goal_position = Point(0.65, 0.0, 0.12) # Faulty Conveyor Yumi
 
     #FUNAC
-    #Still have to decide implementation
+    obj_position = Point(0.49863, 0.0, 0.05) # Object in front of robot in Yumi env
+    goal_position = Point(0.0, 0.5, 0.12) # Faulty Conveyor Yumi
     
     rate = rospy.Rate(10)  # 10 Hz loop rate
     while not rospy.is_shutdown():

@@ -132,9 +132,9 @@ class Funac_PicknPlace:
         pick_pose = geometry_msgs.msg.PoseStamped()
         #orientation = tf.quaternion_from_euler(0, -np.pi/2, 0)
         pick_pose.header.frame_id = "base_link"  # You can use "world" or another frame
-        pick_pose.pose.position.x = 0.3
-        pick_pose.pose.position.y = 0
-        pick_pose.pose.position.z = 0.07
+        pick_pose.pose.position.x = self.object_pos.x #0.3
+        pick_pose.pose.position.y = self.object_pos.y
+        pick_pose.pose.position.z = self.object_pos.z + 0.05
         
         pick_pose.pose.orientation.x = 1.0
         pick_pose.pose.orientation.y = 0.0
@@ -152,9 +152,9 @@ class Funac_PicknPlace:
         place_pose = geometry_msgs.msg.PoseStamped()
         #orientation = tf.quaternion_from_euler(0, np.pi/2, 0)
         place_pose.header.frame_id = "base_link"  # You can use "world" or another frame
-        place_pose.pose.position.x = 0.0
-        place_pose.pose.position.y = -0.4
-        place_pose.pose.position.z = 0.3
+        place_pose.pose.position.x = self.goal_pos.x #0.0
+        place_pose.pose.position.y = self.goal_pos.y #-0.4
+        place_pose.pose.position.z = self.goal_pos.z #0.3
         
         place_pose.pose.orientation.x = 1.0
         place_pose.pose.orientation.y = 0.0
