@@ -1,5 +1,5 @@
 # Yumi
-ROS Noetic Package to control multiple robots through MoveIt package. THe current setup utilizes Isaac Sim 4.5 to provide an simulation environment. The operations are activated through an service, this service requires the object position and the goal position and reponds with a boolean to determine the sucess of the operation. 
+ROS Noetic Package to control multiple robots through MoveIt package. The current setup utilizes Isaac Sim 4.5 to provide a simulation environment. The operations are activated through a service, this service requires the object position and the goal position and responds with a boolean to determine the success of the operation. 
 
 ## Package description:
 
