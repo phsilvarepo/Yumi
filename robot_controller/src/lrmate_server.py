@@ -10,7 +10,7 @@ import trajectory_msgs.msg
 import shape_msgs.msg
 import tf.transformations as tf
 import numpy as np
-from panda_controller.srv import MoveToGoal, MoveToGoalResponse
+from robot_controller.srv import MoveToGoal, MoveToGoalResponse
 
 class Funac_PicknPlace:
     def __init__(self):

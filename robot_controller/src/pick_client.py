@@ -2,7 +2,7 @@
 
 import rospy
 from geometry_msgs.msg import Point, PoseStamped
-from panda_controller.srv import MoveToGoal
+from robot_controller.srv import MoveToGoal
 from std_msgs.msg import String
 
 obj_position = None
@@ -53,20 +53,17 @@ if __name__ == "__main__":
     #rospy.Subscriber("/dope/relative_soup_pose", PoseStamped, dope_callback)
 
     #FRANKA
-    #obj_position = Point(0.0, -0.55, 0.05) Object on the right of robot in Franka env
-    #goal_position = Point(0.0, 0.55, 0.12) Next Conveyor Franka
-    #goal_position = Point(0.55, 0.0, 0.12) Faulty Conveyor Franka
+    obj_position = Point(0.0, -0.55, 0.05) #Object on the right of robot in Franka env
+    goal_position = Point(0.0, 0.55, 0.12) #Next Conveyor Franka
+    #goal_position = Point(0.55, 0.0, 0.12) #Faulty Conveyor Franka
 
     #YUMI
     #obj_position = Point(0.4, 0.0, 0.05) # Object in front of robot in Yumi env
     #goal_position = Point(0.65, 0.0, 0.12) # Next Conveyor Yumi
-    #goal_position = Point(0.55, 0.55, 0.12) Faulty Conveyor Yumi
+    #goal_position = Point(0.55, 0.55, 0.12) #Faulty Conveyor Yumi
 
     #FUNAC
-    obj_position = Point(0.4, 0.0, 0.12) # Object in front of robot in Funac env
-    goal_position = Point(0.65, 0.0, 0.12) # Next Conveyor Funac
-    #goal_position = Point(0.55, 0.55, 0.12) Faulty Conveyor Funac
-
+    #Still have to decide implementation
     
     rate = rospy.Rate(10)  # 10 Hz loop rate
     while not rospy.is_shutdown():
