@@ -29,7 +29,7 @@
     <visual>
       <origin xyz="0 0 0" rpy="0 0 0" />
       <geometry>
-        <mesh filename="package://ldr/meshes/Base.STL" />
+        <mesh filename="package://fanuc_better_model/meshes/Base.STL" />
       </geometry>
       <material name="">
         <color rgba="0.16863 0.18431 0.19608 1" />
@@ -38,7 +38,7 @@
     <collision>
       <origin xyz="0 0 0" rpy="0 0 0" />
       <geometry>
-        <mesh filename="package://ldr/meshes/Base.STL" />
+        <mesh filename="package://fanuc_better_model/meshes/Base.STL" />
       </geometry>
     </collision>
   </link>
@@ -64,7 +64,7 @@
         rpy="0 0 0" />
       <geometry>
         <mesh
-          filename="package://ldr/meshes/J1.STL" />
+          filename="package://fanuc_better_model/meshes/J1.STL" />
       </geometry>
       <material
         name="">
@@ -78,7 +78,7 @@
         rpy="0 0 0" />
       <geometry>
         <mesh
-          filename="package://ldr/meshes/J1.STL" />
+          filename="package://fanuc_better_model/meshes/J1.STL" />
       </geometry>
     </collision>
   </link>
@@ -122,7 +122,7 @@
         rpy="0 0 0" />
       <geometry>
         <mesh
-          filename="package://ldr/meshes/J2.STL" />
+          filename="package://fanuc_better_model/meshes/J2.STL" />
       </geometry>
       <material
         name="">
@@ -136,7 +136,7 @@
         rpy="0 0 0" />
       <geometry>
         <mesh
-          filename="package://ldr/meshes/J2.STL" />
+          filename="package://fanuc_better_model/meshes/J2.STL" />
       </geometry>
     </collision>
   </link>
@@ -180,7 +180,7 @@
         rpy="0 0 0" />
       <geometry>
         <mesh
-          filename="package://ldr/meshes/J3.STL" />
+          filename="package://fanuc_better_model/meshes/J3.STL" />
       </geometry>
       <material
         name="">
@@ -194,7 +194,7 @@
         rpy="0 0 0" />
       <geometry>
         <mesh
-          filename="package://ldr/meshes/J3.STL" />
+          filename="package://fanuc_better_model/meshes/J3.STL" />
       </geometry>
     </collision>
   </link>
@@ -238,7 +238,7 @@
         rpy="0 0 0" />
       <geometry>
         <mesh
-          filename="package://ldr/meshes/J4.STL" />
+          filename="package://fanuc_better_model/meshes/J4.STL" />
       </geometry>
       <material
         name="">
@@ -252,7 +252,7 @@
         rpy="0 0 0" />
       <geometry>
         <mesh
-          filename="package://ldr/meshes/J4.STL" />
+          filename="package://fanuc_better_model/meshes/J4.STL" />
       </geometry>
     </collision>
   </link>
@@ -296,7 +296,7 @@
         rpy="0 0 0" />
       <geometry>
         <mesh
-          filename="package://ldr/meshes/J5.STL" />
+          filename="package://fanuc_better_model/meshes/J5.STL" />
       </geometry>
       <material
         name="">
@@ -310,7 +310,7 @@
         rpy="0 0 0" />
       <geometry>
         <mesh
-          filename="package://ldr/meshes/J5.STL" />
+          filename="package://fanuc_better_model/meshes/J5.STL" />
       </geometry>
     </collision>
   </link>
@@ -354,7 +354,7 @@
         rpy="0 0 0" />
       <geometry>
         <mesh
-          filename="package://ldr/meshes/J6.STL" />
+          filename="package://fanuc_better_model/meshes/J6.STL" />
       </geometry>
       <material
         name="">
@@ -368,7 +368,7 @@
         rpy="0 0 0" />
       <geometry>
         <mesh
-          filename="package://ldr/meshes/J6.STL" />
+          filename="package://fanuc_better_model/meshes/J6.STL" />
       </geometry>
     </collision>
   </link>
