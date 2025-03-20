@@ -46,11 +46,17 @@ def dope_callback(msg):
     global obj_position
     obj_position = msg.pose.position 
 
+def object_grasp_callback(msg):
+    global obj_position
+    obj_position = msg
+
 if __name__ == "__main__":
     rospy.init_node('move_to_goal_client')
 
     #rospy.Subscriber("/ultralytics/detection/classes", String, yolo_callback)
     #rospy.Subscriber("/dope/relative_soup_pose", PoseStamped, dope_callback)
+    #rospy.Subscriber("/docking_station/detected_object", Point, object_grasp_callback) #FANUC Docking
+    rospy.Subscriber("/detected_object_pos", Point, object_grasp_callback) #FANUC Simple
 
     #FRANKA
     #obj_position = Point(0.0, -0.55, 0.05) # Object on the right of robot in Franka env
@@ -58,13 +64,14 @@ if __name__ == "__main__":
     #goal_position = Point(0.55, 0.0, 0.12) # Faulty Conveyor Franka
 
     #YUMI
-    obj_position = Point(0.4, 0.0, 0.05) # Object in front of robot in Yumi env
+    #obj_position = Point(0.4, 0.0, 0.05) # Object in front of robot in Yumi env
     #goal_position = Point(0.0, 0.55, 0.12) # Next Conveyor Yumi
-    goal_position = Point(0.65, 0.0, 0.12) # Faulty Conveyor Yumi
+    #goal_position = Point(0.65, 0.0, 0.12) # Faulty Conveyor Yumi
 
     #FUNAC
-    obj_position = Point(0.49863, 0.0, 0.05) # Object in front of robot in Yumi env
-    goal_position = Point(0.0, 0.5, 0.12) # Faulty Conveyor Yumi
+    #obj_position = Point(0.49863, 0.0, 0.05) # Object in front of robot in Yumi env
+    #obj_position = Point(0.3, 0.0, 0.065) # Object in front of robot in Yumi env
+    goal_position = Point(0.0, 0.5, 0.3) # Faulty Conveyor Yumi
     
     rate = rospy.Rate(10)  # 10 Hz loop rate
     while not rospy.is_shutdown():

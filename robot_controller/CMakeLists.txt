@@ -164,6 +164,7 @@ catkin_install_python(PROGRAMS
    src/yumi_server.py
    src/yumi_static_pick.py
    src/funac_server.py
+   src/lrmate200id_server.py
    DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION}
 )
 

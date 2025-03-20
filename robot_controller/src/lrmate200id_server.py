@@ -132,9 +132,9 @@ class Funac_PicknPlace:
         pick_pose = geometry_msgs.msg.PoseStamped()
         #orientation = tf.quaternion_from_euler(0, -np.pi/2, 0)
         pick_pose.header.frame_id = "base_link"  # You can use "world" or another frame
-        pick_pose.pose.position.x = self.object_pos.x 
+        pick_pose.pose.position.x = self.object_pos.x #0.3 
         pick_pose.pose.position.y = self.object_pos.y
-        pick_pose.pose.position.z = self.object_pos.z + 0.1 #Offset
+        pick_pose.pose.position.z = self.object_pos.z + 0.002 #Offset
         
         pick_pose.pose.orientation.x = 1.0
         pick_pose.pose.orientation.y = 0.0
@@ -162,46 +162,6 @@ class Funac_PicknPlace:
         place_pose.pose.orientation.w = 0.0
         
         move_group.set_pose_target(place_pose)
-        result=move_group.go(wait=True)
-
-        rospy.loginfo(f"Move result: {result}")
-
-    def move_down(self, move_group):
-
-        # Create PoseStamped
-        approach_pose = geometry_msgs.msg.PoseStamped()
-        #orientation = tf.quaternion_from_euler(0, np.pi/2, 0)
-        approach_pose.header.frame_id = "base_link"  # You can use "world" or another frame
-        approach_pose.pose.position.x = self.object_pos.x #0.0
-        approach_pose.pose.position.y = self.object_pos.y #-0.4
-        approach_pose.pose.position.z = self.object_pos.z + 0.004
-        
-        approach_pose.pose.orientation.x = 1.0
-        approach_pose.pose.orientation.y = 0.0
-        approach_pose.pose.orientation.z = 0.0
-        approach_pose.pose.orientation.w = 0.0
-        
-        move_group.set_pose_target(approach_pose)
-        result=move_group.go(wait=True)
-
-        rospy.loginfo(f"Move result: {result}")
-
-    def move_up(self, move_group):
-
-        # Create PoseStamped
-        retreat_pose = geometry_msgs.msg.PoseStamped()
-        #orientation = tf.quaternion_from_euler(0, np.pi/2, 0)
-        retreat_pose.header.frame_id = "base_link"  # You can use "world" or another frame
-        retreat_pose.pose.position.x = self.object_pos.x #0.0
-        retreat_pose.pose.position.y = self.object_pos.y #-0.4
-        retreat_pose.pose.position.z = self.object_pos.z + 0.1
-        
-        retreat_pose.pose.orientation.x = 1.0
-        retreat_pose.pose.orientation.y = 0.0
-        retreat_pose.pose.orientation.z = 0.0
-        retreat_pose.pose.orientation.w = 0.0
-        
-        move_group.set_pose_target(retreat_pose)
         result=move_group.go(wait=True)
 
         rospy.loginfo(f"Move result: {result}")
@@ -260,13 +220,7 @@ class Funac_PicknPlace:
         self.move_to_pick(move_group)
         rospy.sleep(1.0)
 
-        self.move_down(move_group)
-        rospy.sleep(1.0)
-
         self.turn_suction_cup_on()
-        rospy.sleep(1.0)
-
-        self.move_up(move_group)
         rospy.sleep(1.0)
 
         self.move_to_place(move_group)
