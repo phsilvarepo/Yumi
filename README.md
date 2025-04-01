@@ -25,6 +25,48 @@ rosrun robot_controller franka_server.py
 Run client node:
 rosrun robot_controller pick_client.py
 
-Fanuc Environment:
+## Fanuc Environment:
+Simulator
 Open store_item_fanuc.usd
 
+Node to run object detection with YOLOv8 architecture
+rosrun yolov8_ros yolov8.py
+
+Node to extract object position from YOLO detection
+rosrun camera_triangulation object_pos.py
+
+Moveit demo launch
+roslaunch fanuc_lrmate200id_moveit_config demo.launch
+
+Service server
+rosrun robot_controller lrmate200id_server.py
+
+Service client
+rosrun robot_controller pick_client.py
+
+## Panda Environment:
+Simulator
+Open simple_franka.usd
+
+Moveit demo launch
+roslaunch panda_moveit_config demo.launch
+
+Service server
+rosrun robot_controller franka_server.py
+
+Service client
+rosrun robot_controller pick_client.py
+
+
+## Yumi Environment:
+Simulator
+Open simple_franka.usd
+
+Moveit demo launch
+roslaunch panda_moveit_config demo.launch
+
+Service server
+rosrun robot_controller franka_server.py
+
+Service client
+rosrun robot_controller pick_client.py
