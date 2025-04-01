@@ -24,3 +24,7 @@ rosrun robot_controller franka_server.py
 
 Run client node:
 rosrun robot_controller pick_client.py
+
+Fanuc Environment:
+Open store_item_fanuc.usd
+
