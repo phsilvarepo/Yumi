@@ -71,16 +71,19 @@ if __name__ == "__main__":
     #FUNAC
     #obj_position = Point(0.49863, 0.0, 0.05) # Object in front of robot in Yumi env
     #obj_position = Point(0.3, 0.0, 0.065) # Object in front of robot in Yumi env
-    goal_position = Point(0.0, 0.5, 0.3) # Faulty Conveyor Yumi
-    
+    #goal_position = Point(0.0, 0.5, 0.3) # Faulty Conveyor Yumi
+    goal_position = Point(0.0, 0.5, 0.3) # Box position
+
     rate = rospy.Rate(10)  # 10 Hz loop rate
     while not rospy.is_shutdown():
         if obj_position and goal_position:
+            print(obj_position)
             rospy.loginfo(f"Object position: {obj_position}")
             rospy.loginfo(f"Goal position: {goal_position}")
             rospy.loginfo("Calling service...")
 
             move_to_goal_client(obj_position, goal_position)
             break  # Exit after one successful movement
+        print("No objects detected...")
         rate.sleep()
 
