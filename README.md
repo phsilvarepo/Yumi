@@ -57,16 +57,15 @@ rosrun robot_controller franka_server.py
 Service client
 rosrun robot_controller pick_client.py
 
-
 ## Yumi Environment:
 Simulator
-Open simple_franka.usd
+Open yumi_simple.usd
 
 Moveit demo launch
-roslaunch panda_moveit_config demo.launch
+roslaunch yumi_moveit_config demo.launch
 
 Service server
-rosrun robot_controller franka_server.py
+rosrun robot_controller yumi_server.py
 
 Service client
 rosrun robot_controller pick_client.py
